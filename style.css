@@ -1,0 +1,960 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@200..800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, #09090b 0%, #111115 50%, #1a1525 100%);
+    color: #ffffff;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* --- FITUR 5: STYLE PROGRESS BAR --- */
+.progress-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    z-index: 1000;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 14.28%; /* Nilai awal slide 1 (100% / 7 slide) */
+    background: linear-gradient(90deg, #a855f7, #ec4899);
+    box-shadow: 0 0 12px rgba(236, 72, 153, 0.7);
+    transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* --- STYLE NAMA --- */
+.header-name {
+    display: block;
+    letter-spacing: 4px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 12px;
+}
+
+.header-name-hero {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    letter-spacing: 6px;
+    font-size: 1.2rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    text-align: center;
+    width: 100%;
+    padding: 0 20px;
+}
+
+/* --- SLIDER BASE --- */
+.slider {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* --- LAYOUT FOTO --- */
+.photo-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    transition: transform 1.4s cubic-bezier(0.25, 1, 0.5, 1), border-radius 1.4s ease, width 1.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.slide-1 .photo-container { width: 100%; }
+
+.slide.active:not(.slide-1) .photo-container {
+    width: 50%;
+    transform: translateX(-50%);
+    border-radius: 0 32px 32px 0;
+    box-shadow: 10px 0 50px rgba(0, 0, 0, 0.5);
+}
+
+.photo-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.slide.active .photo-container.fx-zoom img { transform: scale(1.08); }
+.slide:not(.active) .photo-container.fx-slide-up img { transform: translateY(50px); opacity: 0; }
+.slide:not(.active) .photo-container.fx-slide-down img { transform: translateY(-50px); opacity: 0; }
+.slide:not(.active) .photo-container.fx-fade img { opacity: 0.3; }
+
+.photo-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(9, 9, 11, 0.3) 0%, transparent 40%);
+}
+
+.slide.active .photo-container.frame-ibu {
+    border: 3px solid rgba(138, 129, 7, 0.8) !important;
+    outline: 1px solid rgba(255, 254, 254, 0.3);
+    outline-offset: 12px;
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.15), 10px 0 60px rgba(0, 0, 0, 0.6) !important;
+    border-radius: 24px !important; 
+    transform: translateX(-50%) scale(0.9) !important; 
+}
+
+/* --- KOTAK TEKS KACA --- */
+.content-right {
+    position: absolute;
+    right: 5%;
+    width: 42%;
+    padding: 50px;
+    opacity: 0;
+    transform: translateX(40px);
+    transition: all 1s cubic-bezier(0.25, 1, 0.5, 1) 0.6s;
+    background: rgba(28, 28, 29, 0.226);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(177, 50, 50, 0.08);
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(228, 225, 225, 0.3);
+}
+
+.slide.active:not(.slide-1) .content-right {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.content-right h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+    background: linear-gradient(to right, #ffffff, #d4d4d8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.content-right p { font-size: 1.05rem; line-height: 1.8; color: #cbd5e1; }
+
+/* --- CONTROLS & CREDITS (POSISI YANG SUDAH PAS) --- */
+.nav-controls {
+    position: absolute;
+    bottom: 140px;
+    right: 80px;
+    display: flex;
+    gap: 20px;
+    z-index: 200;
+    align-items: center;
+}
+
+.btn, .music-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    color: white;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.btn:hover:not(:disabled), .music-btn:hover {
+    background: #ffffff;
+    color: #09090b;
+    border-color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.btn:disabled { opacity: 0.15; cursor: not-allowed; }
+.btn svg, .music-btn svg { width: 20px; height: 20px; fill: currentColor; }
+
+.credits {
+    position: absolute;
+    bottom: 95px;
+    right: 80px;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 1.5px;
+    font-weight: 300;
+    z-index: 250;
+    pointer-events: none;
+}
+
+/* --- FITUR 3: STYLE INTERACTIVE ENVELOPE --- */
+.envelope-wrapper {
+    width: 200px;
+    height: 150px;
+    position: relative;
+    cursor: pointer;
+    z-index: 10;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.envelope-wrapper:hover {
+    transform: scale(1.08) rotate(-2deg);
+}
+
+.envelope {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #1e1b4b;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+}
+
+.flap {
+    position: absolute;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-top: 75px solid #312e81;
+    transform-origin: top;
+    transition: transform 0.4s ease 0.2s;
+    z-index: 4;
+}
+
+.pocket {
+    position: absolute;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-left: 100px solid #2e2a75;
+    border-right: 100px solid #2e2a75;
+    border-bottom: 75px solid #25225e;
+    border-radius: 0 0 12px 12px;
+    z-index: 3;
+}
+
+.letter-preview {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    width: 180px;
+    height: 110px;
+    background: #fafafa;
+    border-radius: 6px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.4s ease;
+}
+
+.letter-preview p {
+    color: #1e1b4b;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+
+/* --- RESPONSIVE MOBILE --- */
+@media (max-width: 768px) {
+    .slide.active:not(.slide-1) .photo-container {
+        width: 100%; height: 42%; transform: translateY(-58%); border-radius: 0 0 32px 32px;
+    }
+    .slide.active .photo-container.frame-ibu {
+        border: 2px solid rgba(255, 255, 255, 0.8) !important;
+        outline-offset: 8px; transform: translateY(-62%) scale(0.85) !important;
+    }
+    .content-right { width: 90%; right: 5%; left: 5%; top: 46%; padding: 30px 24px; text-align: center; }
+    .content-right h2 { font-size: 1.8rem; }
+    .content-right p { font-size: 0.95rem; }
+    
+    .nav-controls { bottom: 150px; right: 50%; transform: translateX(50%); }
+    .btn, .music-btn { width: 48px; height: 48px; }
+    
+    .content-full { width: 90%; padding: 40px 24px; }
+    .content-full h2 { font-size: 2rem; }
+    
+    .credits { bottom: 100px; left: 50%; right: auto; transform: translateX(-50%); width: 100%; text-align: center; font-size: 0.7rem; }
+}
+/* ========= FINAL PREMIUM ========= */
+
+.hero-overlay{
+    position:absolute;
+    inset:0;
+    background:
+    linear-gradient(
+        to top,
+        rgba(0,0,0,0.88),
+        rgba(0,0,0,0.25)
+    );
+    z-index:2;
+}
+
+.slide-final .photo-container{
+    width:100% !important;
+    height:100%;
+    transform:none !important;
+    border-radius:0 !important;
+}
+
+.slide-final .photo-container img{
+    filter:brightness(0.45);
+}
+
+.slide-final .content-full{
+    position:absolute;
+    z-index:40;
+
+    max-width:760px;
+
+    background:rgba(255,255,255,0.04);
+
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+    0 20px 60px rgba(0,0,0,0.45);
+}
+
+.slide-final .content-full h2{
+    font-size:3rem;
+}
+
+.slide-final .content-full p{
+    line-height:1.9;
+}
+
+.slide-final .envelope-wrapper{
+    z-index:50;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    .slide-final .content-full h2{
+        font-size:2rem;
+    }
+
+}
+/* FOTO BACKGROUND SURAT */
+
+.content-full{
+    overflow:hidden;
+}
+
+.letter-bg-photo{
+    position:absolute;
+
+    inset:0;
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    opacity:0.12;
+
+    filter:
+    grayscale(10%)
+    blur(1px);
+
+    z-index:-1;
+
+    transform:scale(1.05);
+}
+/* ========= FINAL PREMIUM ========= */
+
+.hero-overlay{
+    position:absolute;
+    inset:0;
+    background:
+    linear-gradient(
+        to top,
+        rgba(0,0,0,0.88),
+        rgba(0,0,0,0.25)
+    );
+    z-index:2;
+}
+
+.slide-final .photo-container{
+    width:100% !important;
+    height:100%;
+    transform:none !important;
+    border-radius:0 !important;
+}
+
+.slide-final .photo-container img{
+    filter:brightness(0.45);
+}
+
+.slide-final .content-full{
+    position:absolute;
+    z-index:40;
+
+    max-width:760px;
+
+    background:rgba(255,255,255,0.04);
+
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+    0 20px 60px rgba(0,0,0,0.45);
+
+    overflow:hidden;
+}
+
+.slide-final .content-full h2{
+    font-size:3rem;
+}
+
+.slide-final .content-full p{
+    line-height:1.9;
+}
+
+.slide-final .envelope-wrapper{
+    z-index:50;
+}
+
+/* FOTO SAMAR DI BELAKANG SURAT */
+
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    .slide-final .content-full h2{
+        font-size:2rem;
+    }
+
+}
+/* ========= FINAL PREMIUM SMOOTH ========= */
+
+.slide-final{
+    overflow:hidden;
+}
+
+/* Background */
+
+.final-photo-bg{
+    position:absolute;
+    inset:0;
+
+    width:100% !important;
+    height:100% !important;
+
+    transform:none !important;
+    border-radius:0 !important;
+}
+
+.final-photo-bg img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    filter:
+    brightness(0.35)
+    scale(1.05);
+
+    animation:
+    slowZoom 14s ease-in-out infinite alternate;
+}
+
+/* Overlay */
+
+.hero-overlay{
+    position:absolute;
+    inset:0;
+
+    background:
+    linear-gradient(
+        to top,
+        rgba(0,0,0,0.88),
+        rgba(0,0,0,0.45)
+    );
+
+    backdrop-filter:blur(2px);
+
+    z-index:2;
+}
+
+/* Amplop */
+
+.slide-final .envelope-wrapper{
+    z-index:50;
+
+    transition:
+    transform 0.8s cubic-bezier(0.22,1,0.36,1),
+    opacity 0.8s ease;
+}
+
+.envelope-wrapper.open{
+    transform:
+    translateY(-30px)
+    scale(0.92);
+
+    opacity:0;
+}
+
+/* Surat */
+
+.slide-final .content-full{
+    position:absolute;
+
+    z-index:40;
+
+    max-width:760px;
+
+    background:
+    linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.06),
+        rgba(255,255,255,0.03)
+    );
+
+    backdrop-filter:blur(24px);
+    -webkit-backdrop-filter:blur(24px);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+    0 30px 80px rgba(0,0,0,0.45);
+
+    overflow:hidden;
+
+    transform:
+    translateY(40px)
+    scale(0.95);
+
+    opacity:0;
+
+    transition:
+    all 1.2s cubic-bezier(0.22,1,0.36,1);
+}
+
+/* Saat surat muncul */
+
+.slide-final .show-letter{
+    opacity:1 !important;
+
+    transform:
+    translateY(0)
+    scale(1);
+}
+
+/* Typography */
+
+.slide-final .content-full h2{
+    font-size:3.2rem;
+
+    margin-bottom:26px;
+
+    text-shadow:
+    0 4px 20px rgba(0,0,0,0.3);
+}
+
+.slide-final .content-full p{
+    line-height:2;
+
+    color:rgba(255,255,255,0.82);
+}
+
+/* Background Animation */
+
+@keyframes slowZoom{
+
+    from{
+        transform:scale(1.05);
+    }
+
+    to{
+        transform:scale(1.12);
+    }
+
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+    .slide-final .content-full{
+        width:90%;
+        padding:40px 24px;
+    }
+
+    .slide-final .content-full h2{
+        font-size:2rem;
+    }
+
+}
+/* ========= FINAL PREMIUM NO ENVELOPE ========= */
+
+.slide-final{
+    overflow:hidden;
+}
+
+/* Background */
+
+.final-photo-bg{
+    position:absolute;
+    inset:0;
+
+    width:100% !important;
+    height:100% !important;
+
+    transform:none !important;
+    border-radius:0 !important;
+}
+
+.final-photo-bg img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    filter:brightness(0.35);
+
+    animation:
+    slowZoom 14s ease-in-out infinite alternate;
+}
+
+/* Overlay */
+
+.hero-overlay{
+    position:absolute;
+    inset:0;
+
+    background:
+    linear-gradient(
+        to top,
+        rgba(0,0,0,0.88),
+        rgba(0,0,0,0.45)
+    );
+
+    z-index:2;
+}
+
+/* Final Letter */
+
+.final-letter{
+    position:absolute;
+
+    z-index:20;
+
+    max-width:760px;
+
+    background:
+    linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.06),
+        rgba(255,255,255,0.03)
+    );
+
+    backdrop-filter:blur(24px);
+    -webkit-backdrop-filter:blur(24px);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+    0 30px 80px rgba(0,0,0,0.45);
+
+    animation:
+    smoothAppear 3s cubic-bezier(0.22,1,0.36,1);
+}
+
+/* Typography */
+
+.final-letter h2{
+    font-size:3rem;
+
+    margin-bottom:24px;
+
+    text-shadow:
+    0 4px 20px rgba(26, 25, 25, 0.3);
+}
+
+.final-letter p{
+    line-height:2;
+
+    color:rgba(255,255,255,0.82);
+}
+
+/* Animation */
+
+@keyframes smoothAppear{
+
+    from{
+        opacity:0;
+        transform:
+        translateY(50px)
+        scale(0.96);
+    }
+
+    to{
+        opacity:1;
+        transform:
+        translateY(0)
+        scale(1);
+    }
+
+}
+
+@keyframes slowZoom{
+
+    from{
+        transform:scale(2.10);
+    }
+
+    to{
+        transform:scale(2.10);
+    }
+
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+    .final-letter{
+        width:90%;
+        padding:40px 24px;
+    }
+
+    .final-letter h2{
+        font-size:2rem;
+    }
+
+}
+/* Animasi Buka Amplop */
+.envelope-wrapper.open .klik {
+    transform: rotateX(180deg);
+    z-index: 1;
+}
+
+.envelope-wrapper.open .letter-preview {
+    transform: translateY(-50px);
+    z-index: 5;
+}
+
+/* Manajemen Transisi Menuju Teks Ucapan Utama */
+.hidden-letter {
+    display: none;
+    opacity: 0;
+    transform: scale(0.9) translateY(30px);
+    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.show-letter {
+    display: block !important;
+    opacity: 1 !important;
+    transform: scale(1) translateY(0) !important;
+}
+
+/* --- SLIDE FINAL BASE --- */
+.slide-final { justify-content: center; align-items: center; flex-direction: column; }
+.content-full {
+    width: 60%;
+    max-width: 750px;
+    padding: 50px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(115, 158, 98, 0.76);
+    border-radius: 32px;
+    box-shadow: 0 30px 60px rgba(139, 56, 56, 0.726);
+}
+
+.content-full h2 { font-family: 'Playfair Display', serif; font-size: 2.8rem; margin-bottom: 24px; }
+.content-full p { font-size: 1.1rem; line-height: 1.9; color: #cbd5e1; }
+
+/* LOGO FOOTER */
+
+.footer-logo{
+    width:70px;
+
+    opacity:0.7;
+
+    transition:0.4s ease;
+
+    filter:
+    drop-shadow(0 0 12px rgba(255,255,255,0.15));
+}
+
+.footer-logo:hover{
+    opacity:1;
+
+    transform:scale(1.08);
+}/* LOGO FOOTER */
+
+.footer-logo{
+    width:70px;
+
+    opacity:0.7;
+
+    transition:0.4s ease;
+
+    filter:
+    drop-shadow(0 0 12px rgba(255,255,255,0.15));
+}
+
+.footer-logo:hover{
+    opacity:1;
+
+    transform:scale(1.08);
+}
+.credits{
+    position:absolute;
+
+    bottom:95px;
+    right:80px;
+
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    font-size:0.75rem;
+
+    color:rgba(255,255,255,0.4);
+
+    letter-spacing:1.5px;
+
+    font-weight:300;
+
+    z-index:250;
+
+    pointer-events:none;
+}.footer-logo{
+    width:28px;
+    height:28px;
+
+    object-fit:contain;
+
+    opacity:0.75;
+
+    filter:
+    drop-shadow(0 0 10px rgba(255,255,255,0.12));
+
+    transition:0.4s ease;
+}
+.credits{
+    position:absolute;
+
+    bottom:95px;
+    right:80px;
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    font-size:0.75rem;
+
+    color:rgba(255,255,255,0.4);
+
+    letter-spacing:1.5px;
+
+    font-weight:300;
+
+    z-index:250;
+
+    pointer-events:none;
+}
+
+/* LOGO */
+
+.footer-logo{
+    width:24px;
+    height:24px;
+
+    object-fit:contain;
+
+    opacity:0.8;
+
+    filter:
+    drop-shadow(0 0 8px rgba(255,255,255,0.15));
+
+    transition:0.4s ease;
+}
+.credits{
+    position:absolute;
+
+    bottom:80px;
+
+    left:50%;
+    transform:translateX(-50%);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:15px;
+
+    font-size:0.75rem;
+
+    color:rgba(255,255,255,0.4);
+
+    letter-spacing:1.5px;
+
+    font-weight:300;
+
+    z-index:250;
+}
+
+/* LOGO */
+
+.footer-logo{
+    width:24px;
+    height:24px;
+
+    object-fit:contain;
+
+    opacity:0.8;
+
+    filter:
+    drop-shadow(0 0 8px rgba(255,255,255,0.15));
+}
