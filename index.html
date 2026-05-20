@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satu Hari Spesial ✨</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- FITUR 5: PROGRESS BAR DI PALING ATAS LAYAR -->
+    <div class="progress-container">
+        <div class="progress-bar" id="myProgressBar"></div>
+    </div>
+    
+
+    <!-- Audio Background (Instrumen Piano Klasik Lembut) -->
+    <audio id="birthday-audio" loop>
+        <source src="Beranjak Dewasa - Nadin Amizah  Lirik Lagu.mp3" type="audio/mp3">
+    </audio>
+
+    <div class="slider">
+        
+        <!-- SLIDE 1: FOTO UTAMA (FULL SCREEN) -->
+        <div class="slide slide-1 active">
+            <div class="photo-container">
+                <img src="foto1.png" alt="Foto 1">
+            </div>
+            <div class="header-name-hero">Happy Birthday, Nisa Aulia</div>
+        </div>
+
+        <!-- SLIDE 2: APRESIASI DIRI -->
+        <div class="slide">
+            <div class="photo-container">
+                <img src="foto2.jpg" alt="Foto 2">
+            </div>
+            <div class="content-right">
+                <div class="header-name">Happy Birthday, Nisa Aulia</div>
+                <h2>Apresiasi Diri.</h2>
+                <p>Terima kasih untuk diriku sendiri yang sudah melangkah sejauh ini. Terima kasih karena tidak pernah menyerah, meskipun ada banyak hari yang berjalan tidak sesuai dengan rencana.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: PENERIMAAN & PROSES -->
+        <div class="slide">
+            <div class="photo-container">
+                <img src="foto3.jpg" alt="Foto 3">
+            </div>
+            <div class="content-right">
+                <div class="header-name">Happy Birthday, Nisa Aulia</div>
+                <h2>Bertumbuh Pelan.</h2>
+                <p>Tidak perlu terburu-buru membandingkan garis akhirmu dengan orang lain. Setiap orang punya fasenya masing-masing, dan kamu sedang berjalan di waktu terbaikmu.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: KEKUATAN INTERNAL -->
+        <div class="slide">
+            <div class="photo-container">
+                <img src="foto4.jpg" alt="Foto 4">
+            </div>
+            <div class="content-right">
+                <div class="header-name">Happy Birthday, Nisa Aulia</div>
+                <h2>Menjadi Tangguh.</h2>
+                <p>Ingatlah bahwa kamu lebih kuat dari apa yang kamu bayangkan. Kesulitan yang kemarin bertamu bukanlah akhir, melainkan cara semesta menempamu menjadi pribadi yang lebih hebat.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: HARAPAN MASA DEPAN -->
+        <div class="slide">
+            <div class="photo-container">
+                <img src="foto5.png" alt="Foto 5">
+            </div>
+            <div class="content-right">
+                <div class="header-name">Happy Birthday, Nisa Aulia</div>
+                <h2>Masa Depanmu.</h2>
+                <p>Tetaplah melangkah dengan kepala tegak dan hati yang lapang. Percayalah pada proses yang sedang kamu jalani, karena esok hari selalu menyediakan ruang untuk cerita-cerita baru yang lebih bahagia.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: KATA UNTUK IBU (DENGAN FRAME PREMIUM) -->
+        <div class="slide">
+            <div class="photo-container frame-ibu">
+                <img src="foto6.jpeg" alt="Foto Bersama Ibu">
+            </div>
+            <div class="content-right">
+                <div class="header-name">Happy Birthday, Nisa Aulia</div>
+                <h2>Terima Kasih, Ibu.</h2>
+                <p>Di balik setiap langkah, doa-doamu adalah kekuatan yang paling sunyi namun paling nyata. Terima kasih atas cinta tanpa syarat, kesabaran yang tak pernah habis, dan kasih sayang yang membesarkanku hingga hari ini.</p>
+            </div>
+        </div>
+<!-- SLIDE 7: FINAL PREMIUM -->
+<div class="slide slide-final">
+    <!-- Overlay -->
+    <div class="hero-overlay"></div>
+
+    <!-- Amplop -->
+    <div class="envelope-wrapper" id="envelope" onclick="openLetter()">
+
+        <div class="envelope">
+
+            <div class="flap"></div>
+
+            <div class="pocket"></div>
+
+            <div class="letter-preview">
+                <p>Open Letter ✨</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Isi Surat -->
+   <div class="content-full hidden-letter" id="actual-letter">
+
+    <img src="foto7.png" alt="Background" class="letter-bg-photo">
+
+    <div class="header-name">
+        FOR NISA AULIA
+    </div>
+        <h2>
+            Untuk Kamu.
+        </h2>
+
+        <p>
+            Selamat ulang tahun, Nisa.<br><br>
+
+            Semoga semua hal baik perlahan datang menghampirimu.
+            Semoga langkahmu selalu dipenuhi ketenangan,
+            dan semoga dunia selalu memperlakukanmu dengan lembut.<br><br>
+
+            Jangan terlalu keras pada dirimu sendiri.
+            Kamu sudah hebat sampai sejauh ini.<br>
+        </p>
+
+    </div>
+
+</div>
+
+            <!-- Konten Utama (Muncul setelah amplop diklik) -->
+            <div class="content-full hidden-letter" id="actual-letter">
+                <div class="header-name">Happy Birthday, Nisa Aulia</div>
+                <h2>Semangat Buat Kamu.</h2>
+                <p>Langkahmu mungkin tidak selalu mudah, dan beban yang kamu pikul kadang terasa berat. Namun ingatlah, di dalam dirimu ada kekuatan yang jauh lebih besar dari apa pun yang sedang kamu hadapi. Tetaplah percaya pada mimpimu, jaga apinya agar tidak padam, dan melangkahlah dengan penuh keyakinan. Kamu pasti bisa melewati semuanya dengan hebat.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Navigasi & Kontrol Musik -->
+    <div class="nav-controls">
+        <button class="music-btn" id="audio-toggle" aria-label="Play/Stop Musik">
+            <svg id="audio-icon" viewBox="0 0 24 24">
+                <path d="M4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+            </svg>
+        </button>
+
+        <button class="btn" id="prev-btn" onclick="changeSlide(-1)" aria-label="Sebelumnya">
+            <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+        </button>
+        <button class="btn" id="next-btn" onclick="changeSlide(1)" aria-label="Selanjutnya">
+            <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+        </button>
+    </div>
+
+<div class="credits">
+
+    <span>Created</span>
+
+    <img src="logo.png" alt="Logo" class="footer-logo">
+
+    <span>Firman</span>
+
+</div>
+
+    <script src="script.js"></script>
+</body>
+</html>
